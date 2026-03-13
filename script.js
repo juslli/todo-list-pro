@@ -2,8 +2,11 @@ const taskInput = document.getElementById("taskInput");
 const addTaskBtn = document.getElementById("addTaskBtn");
 const taskList = document.getElementById("taskList");
 const taskCounter = document.getElementById("taskCounter");
+const clearAllBtn = document.getElementById("clearAllBtn");
+const filterButtons = document.querySelectorAll(".filter-btn");
 
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+let currentFilter = "all";
 
 function saveTasks() {
   localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -21,16 +24,32 @@ function updateCounter() {
   }
 }
 
+function getFilteredTasks() {
+  if (currentFilter === "pending") {
+    return tasks.filter(task => !task.completed);
+  }
+
+  if (currentFilter === "completed") {
+    return tasks.filter(task => task.completed);
+  }
+
+  return tasks;
+}
+
 function renderTasks() {
   taskList.innerHTML = "";
 
-  if (tasks.length === 0) {
-    taskList.innerHTML = `<p class="empty-message">Nenhuma tarefa adicionada ainda.</p>`;
+  const filteredTasks = getFilteredTasks();
+
+  if (filteredTasks.length === 0) {
+    taskList.innerHTML = `<p class="empty-message">Nenhuma tarefa nessa categoria.</p>`;
     updateCounter();
     return;
   }
 
-  tasks.forEach((task, index) => {
+  filteredTasks.forEach(task => {
+    const originalIndex = tasks.indexOf(task);
+
     const li = document.createElement("li");
     li.classList.add("task-item");
 
@@ -47,13 +66,13 @@ function renderTasks() {
     const deleteBtn = li.querySelector(".delete-btn");
 
     taskText.addEventListener("click", () => {
-      tasks[index].completed = !tasks[index].completed;
+      tasks[originalIndex].completed = !tasks[originalIndex].completed;
       saveTasks();
       renderTasks();
     });
 
     deleteBtn.addEventListener("click", () => {
-      tasks.splice(index, 1);
+      tasks.splice(originalIndex, 1);
       saveTasks();
       renderTasks();
     });
@@ -83,12 +102,47 @@ function addTask() {
   taskInput.focus();
 }
 
+function setFilter(filter) {
+  currentFilter = filter;
+
+  filterButtons.forEach(button => {
+    button.classList.remove("active");
+
+    if (button.dataset.filter === filter) {
+      button.classList.add("active");
+    }
+  });
+
+  renderTasks();
+}
+
 addTaskBtn.addEventListener("click", addTask);
 
-taskInput.addEventListener("keypress", (event) => {
+taskInput.addEventListener("keypress", event => {
   if (event.key === "Enter") {
     addTask();
   }
+});
+
+clearAllBtn.addEventListener("click", () => {
+  if (tasks.length === 0) {
+    alert("Não há tarefas para limpar.");
+    return;
+  }
+
+  const confirmClear = confirm("Tem certeza que deseja apagar todas as tarefas?");
+
+  if (confirmClear) {
+    tasks = [];
+    saveTasks();
+    renderTasks();
+  }
+});
+
+filterButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    setFilter(button.dataset.filter);
+  });
 });
 
 renderTasks();
