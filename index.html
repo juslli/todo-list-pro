@@ -1,36 +1,29 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>To-Do List Pro</title>
-
-<link rel="stylesheet" href="style.css">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>To-Do List Pro</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
+  <div class="background-glow"></div>
 
-<div class="container">
+  <main class="container">
+    <div class="todo-card">
+      <h1>Minhas Tarefas</h1>
 
-<h1>Minhas Tarefas</h1>
+      <div class="input-area">
+        <input type="text" id="taskInput" placeholder="Digite uma tarefa" />
+        <button id="addTaskBtn">Adicionar</button>
+      </div>
 
-<div class="input-area">
+      <p id="taskCounter">0 tarefas pendentes</p>
 
-<input type="text" id="taskInput" placeholder="Digite uma tarefa">
+      <ul id="taskList"></ul>
+    </div>
+  </main>
 
-<button id="addBtn">Adicionar</button>
-
-</div>
-
-<ul id="taskList"></ul>
-
-</div>
-
-<script src="script.js"></script>
-
+  <script src="script.js"></script>
 </body>
-
 </html>
