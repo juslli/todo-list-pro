@@ -39,7 +39,7 @@ body {
 
 .todo-card {
   width: 100%;
-  max-width: 430px;
+  max-width: 460px;
   background: rgba(10, 10, 18, 0.92);
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 22px;
@@ -58,7 +58,7 @@ body {
 .input-area {
   display: flex;
   gap: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 18px;
 }
 
 .input-area input {
@@ -78,15 +78,21 @@ body {
   box-shadow: 0 0 10px rgba(255, 77, 115, 0.25);
 }
 
-.input-area button {
+.input-area button,
+#clearAllBtn,
+.filter-btn,
+.delete-btn {
   border: none;
-  background: linear-gradient(135deg, #ff2f5b, #b3123f);
   color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.input-area button {
+  background: linear-gradient(135deg, #ff2f5b, #b3123f);
   padding: 0 18px;
   border-radius: 12px;
-  cursor: pointer;
   font-weight: bold;
-  transition: 0.3s;
 }
 
 .input-area button:hover {
@@ -94,10 +100,49 @@ body {
   box-shadow: 0 8px 18px rgba(255, 47, 91, 0.3);
 }
 
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
 #taskCounter {
   color: #cfcfd6;
   font-size: 14px;
+}
+
+#clearAllBtn {
+  background: #1a1a28;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+#clearAllBtn:hover {
+  border-color: #ff4d73;
+  color: #ff4d73;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
   margin-bottom: 18px;
+}
+
+.filter-btn {
+  flex: 1;
+  background: #141421;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 14px;
+}
+
+.filter-btn.active {
+  background: linear-gradient(135deg, #ff2f5b, #a80f35);
 }
 
 #taskList {
@@ -132,16 +177,12 @@ body {
 
 .delete-btn {
   background: linear-gradient(135deg, #ff2f5b, #a80f35);
-  border: none;
-  color: white;
   width: 34px;
   height: 34px;
   border-radius: 10px;
-  cursor: pointer;
   font-weight: bold;
   font-size: 16px;
   margin-left: 12px;
-  transition: 0.3s;
 }
 
 .delete-btn:hover {
@@ -151,7 +192,7 @@ body {
 .empty-message {
   text-align: center;
   color: #9a9aa5;
-  padding: 10px 0;
+  padding: 14px 0;
 }
 
 @keyframes fadeIn {
